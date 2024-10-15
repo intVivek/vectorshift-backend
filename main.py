@@ -2,18 +2,21 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Dict
+import os
+from dotenv import load_dotenv
 
 app = FastAPI()
 
 # Allow CORS for all origins
+allowed_origin = os.getenv("ALLOWED_ORIGIN", "http://localhost:3000")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=[allowed_origin],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 class Node(BaseModel):
     id: str
 
